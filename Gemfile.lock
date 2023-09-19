@@ -16,6 +16,7 @@ GEM
       rack-protection (= 3.1.0)
       tilt (~> 2.0)
     tilt (2.3.0)
+    webrick (1.8.1)
 
 PLATFORMS
   arm64-darwin-22
@@ -23,6 +24,7 @@ PLATFORMS
 DEPENDENCIES
   puma
   sinatra
+  webrick
 
 BUNDLED WITH
    2.4.10
