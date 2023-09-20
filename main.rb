@@ -2,5 +2,5 @@
 require 'sinatra'
 
 get '/' do
-	puts 'hello world'
+	@page_title = 'メモアプリ'
 end
