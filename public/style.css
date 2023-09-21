@@ -1,0 +1,13 @@
+.text {
+  width:80%;
+  height:50px;
+  font-size:1.5em;
+  margin:20px;
+}
+
+.button {
+  height:40px;
+  width:50px;
+  margin:auto;
+  font-weight:bold;
+}

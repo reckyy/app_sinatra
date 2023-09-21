@@ -9,3 +9,8 @@ get '/' do
   }
 	erb :index
 end
+
+get '/new' do
+  @page_title = 'メモアプリ'
+  erb :new
+end
