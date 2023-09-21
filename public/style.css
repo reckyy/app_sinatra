@@ -1,6 +1,17 @@
+.form {
+  text-align :center
+}
+
 .text {
   width:80%;
   height:50px;
+  font-size:1.5em;
+  margin:20px;
+}
+
+.textarea {
+  width:80%;
+  height:300px;
   font-size:1.5em;
   margin:20px;
 }
