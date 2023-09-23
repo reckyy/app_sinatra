@@ -30,3 +30,7 @@
   margin:auto;
   font-weight:bold;
 }
+
+.inline-block {
+  display: inline-block;
+}

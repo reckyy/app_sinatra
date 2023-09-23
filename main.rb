@@ -52,3 +52,13 @@ patch '/:id/edit' do
   File.write('db.json', pushed_data)
   redirect "/#{@id}"
 end
+
+delete '/:id/edit' do
+  @id = params[:id].to_i
+  old_data_json = File.read('db.json')
+  old_data = JSON.parse(old_data_json)
+  old_data.delete_at (@id - 1)
+  new_data = JSON.dump(old_data)
+  File.write('db.json', new_data)
+  redirect '/'
+end

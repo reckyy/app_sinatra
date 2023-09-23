@@ -8,7 +8,14 @@
     <%= @json[@id - 1]["content"] %>
   </p>
 
-  <div class='button'>
+  <div class='inline-block'>
     <a href="/<%= @id %>/edit">変更</a>
+    |
+    <a href="/">Top</a>
+    |
+    <form method="post" action="/<%= @id %>/edit" style='display: inline-block;'>
+      <input type="hidden" name="_method" value="delete">
+      <input type="submit" value="削除" onclick="return confirm('入力内容を削除しても良いですか？');">
+    </form>
   </div>
 </div>
