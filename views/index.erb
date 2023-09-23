@@ -1,5 +1,7 @@
 <ol>
   <% @json.each do |json| %>
-    <li><%= json["title"] %></li>
+    <li>
+      <a href="/<%= json["id"] %>"><%= json["title"] %></a>
+    </li>
   <% end %>
 </ol>
