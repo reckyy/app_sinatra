@@ -42,3 +42,13 @@ post '/new' do
   File.write('db.json', pushed_data)
   redirect '/'
 end
+
+patch '/:id/edit' do
+  @id = params[:id].to_i
+  old_data_json = File.read('db.json')
+  old_data = JSON.parse(old_data_json)
+  old_data[@id - 1] = {"id" => @id, "title" => params['title'], "content" => params['content']}
+  pushed_data = JSON.dump(old_data)
+  File.write('db.json', pushed_data)
+  redirect "/#{@id}"
+end
