@@ -6,7 +6,7 @@ require 'json'
 
 get '/' do
   @page_title = 'メモアプリ'
-  File.open('db.json', 'r') { |io| @json = JSON.parse(io) }
+  @json = JSON.parse(File.read('db.json'))
   erb :index
 end
 
@@ -18,14 +18,14 @@ end
 get '/:id' do
   @page_title = 'メモアプリ'
   @id = params[:id].to_i
-  File.open('db.json', 'r') { |io| @json = JSON.parse(io) }
+  @json = JSON.parse(File.read('db.json'))
   erb :show
 end
 
 get '/:id/edit' do
   @page_title = 'メモ編集'
   @id = params[:id].to_i
-  File.open('db.json', 'r') { |io| @json = JSON.parse(io) }
+  @json = JSON.parse(File.read('db.json'))
   erb :edit
 end
 
