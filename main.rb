@@ -23,5 +23,4 @@ post '/new' do
   pushed_data = JSON.dump(old_data)
   File.write('db.json', pushed_data)
   redirect '/'
-  erb :index
 end
