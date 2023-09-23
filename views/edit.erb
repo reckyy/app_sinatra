@@ -1,0 +1,9 @@
+<div class='container'>
+  <form method='post' action='/new' class='form'>
+    <input type='text' name='title' value="<%= @json[@id - 1]["title"] %>" class='text'>
+    <textarea name='content' class='textarea'><%= @json[@id - 1]["content"] %></textarea>
+    <div>
+      <input type='submit' value='作成' class='button'>
+    </div>
+  </form>
+</div>

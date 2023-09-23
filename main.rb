@@ -24,6 +24,15 @@ get '/:id' do
 	erb :show
 end
 
+get '/:id/edit' do
+  @page_title = 'メモ編集'
+  @id = params[:id].to_i
+  File.open('db.json', 'r') { |io| 
+		@json = JSON.load(io)
+  }
+  erb :edit
+end
+
 post '/new' do
   @page_title = 'メモアプリ'
   old_data_json = File.read('db.json')
