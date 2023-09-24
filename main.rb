@@ -9,19 +9,20 @@ def read_json
   JSON.parse(File.read('db.json'))
 end
 
-get '/' do
+before do
   @page_title = 'メモアプリ'
+end
+
+get '/' do
   @json = read_json
   erb :index
 end
 
 get '/new' do
-  @page_title = 'メモアプリ'
   erb :new
 end
 
 get '/:id' do
-  @page_title = 'メモアプリ'
   @id = params[:id].to_i
   @json = read_json
   erb :show
@@ -35,7 +36,6 @@ get '/:id/edit' do
 end
 
 post '/new' do
-  @page_title = 'メモアプリ'
   old_data = read_json
   memo_title = CGI.escapeHTML(params['title'])
   memo_content = CGI.escapeHTML(params['content'])
