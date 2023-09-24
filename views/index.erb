@@ -2,8 +2,11 @@
   <ol>
     <% @json.each do |json| %>
       <li>
-        <a href="/<%= json["id"] %>"><%= json["title"] %></a>
+        <a href="/<%= json["id"] %>">
+          <%= json["title"] %>
+        </a>
       </li>
     <% end %>
   </ol>
+  <a href='/new'>新規メモ</a>
 </div>
