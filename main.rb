@@ -9,6 +9,24 @@ def read_json
   JSON.parse(File.read('db.json'))
 end
 
+def judge_request(json)
+  memo_title = CGI.escapeHTML(params['title'])
+  memo_content = CGI.escapeHTML(params['content'])
+  if request.request_method == 'POST'
+    id = json.size + 1
+    json.push({ 'id' => id, 'title' => memo_title, 'content' => memo_content })
+  else
+    json[@id - 1] = { 'id' => @id, 'title' => memo_title, 'content' => memo_content }
+  end
+end
+
+def edit_db
+  old_data = read_json
+  judge_request(old_data)
+  pushed_data = JSON.dump(old_data)
+  File.write('db.json', pushed_data)
+end
+
 before do
   @page_title = 'メモアプリ'
 end
@@ -36,23 +54,13 @@ get '/:id/edit' do
 end
 
 post '/new' do
-  old_data = read_json
-  memo_title = CGI.escapeHTML(params['title'])
-  memo_content = CGI.escapeHTML(params['content'])
-  old_data.push({ 'id' => old_data.size + 1, 'title' => memo_title, 'content' => memo_content })
-  pushed_data = JSON.dump(old_data)
-  File.write('db.json', pushed_data)
+  edit_db
   redirect '/'
 end
 
 patch '/:id/edit' do
   @id = params[:id].to_i
-  old_data = read_json
-  memo_title = CGI.escapeHTML(params['title'])
-  memo_content = CGI.escapeHTML(params['content'])
-  old_data[@id - 1] = { 'id' => @id, 'title' => memo_title, 'content' => memo_content }
-  pushed_data = JSON.dump(old_data)
-  File.write('db.json', pushed_data)
+  edit_db
   redirect "/#{@id}"
 end
 
