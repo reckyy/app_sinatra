@@ -40,15 +40,15 @@ get '/new' do
   erb :new
 end
 
-get '/:id' do
-  @id = params[:id].to_i
+get %r{/(\d+)} do |id|
+  @id = id.to_i
   @json = read_json
   erb :show
 end
 
-get '/:id/edit' do
+get %r{/(\d+)/edit} do |id|
   @page_title = 'メモ編集'
-  @id = params[:id].to_i
+  @id = id.to_i
   @json = read_json
   erb :edit
 end
@@ -58,17 +58,22 @@ post '/new' do
   redirect '/'
 end
 
-patch '/:id/edit' do
-  @id = params[:id].to_i
+patch %r{/(\d+)/edit} do |id|
+  @id = id.to_i
   edit_db
   redirect "/#{@id}"
 end
 
-delete '/:id/edit' do
-  @id = params[:id].to_i
+delete %r{/(\d+)/edit} do |id|
+  @id = id.to_i
   old_data = read_json
   old_data.delete_at(@id - 1)
   new_data = JSON.dump(old_data)
   File.write('db.json', new_data)
   redirect '/'
+end
+
+not_found do
+  'Something went wrong,
+  but we\'re working on it.'
 end
