@@ -5,8 +5,10 @@ require 'sinatra'
 require 'json'
 require 'cgi'
 
+DB = 'db.json'
+
 def read_json
-  JSON.parse(File.read('db.json'))
+  JSON.parse(File.read(DB))
 end
 
 def judge_request(json)
@@ -22,13 +24,13 @@ def edit_db
   old_data = read_json
   judge_request(old_data)
   pushed_data = JSON.dump(old_data)
-  File.write('db.json', pushed_data)
+  File.write(DB, pushed_data)
 end
 
 before do
   @page_title = 'メモアプリ'
   unless File.exist?('db.json')
-    File.write('db.json', '{}')
+    File.write(DB, '{}')
   end
 end
 
@@ -70,7 +72,7 @@ delete %r{/(\d+)/edit} do |id|
   old_data = read_json
   old_data.delete(@id)
   new_data = JSON.dump(old_data)
-  File.write('db.json', new_data)
+  File.write(DB, new_data)
   redirect '/'
 end
 
