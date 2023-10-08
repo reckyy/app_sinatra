@@ -11,6 +11,10 @@ def read_json
   JSON.parse(File.read(DB))
 end
 
+def write_json(data)
+  File.write(DB, JSON.dump(data))
+end
+
 before do
   @page_title = 'メモアプリ'
   File.write(DB, '{}') unless File.exist?('db.json')
@@ -42,7 +46,7 @@ post '/new' do
   old_data = read_json
   id = old_data.empty? ? 1 : old_data.keys.last.to_i + 1
   old_data[id.to_s] = { 'id' => id, 'title' => params['title'], 'content' => params['content'] }
-  File.write(DB, JSON.dump(old_data))
+  write_json(old_data)
   redirect '/'
 end
 
@@ -50,7 +54,7 @@ patch %r{/(\d+)/edit} do |id|
   @id = id
   old_data = read_json
   old_data[@id.to_s] = { 'id' => @id.to_i, 'title' => params['title'], 'content' => params['content'] }
-  File.write(DB, JSON.dump(old_data))
+  write_json(old_data)
   redirect "/#{@id}"
 end
 
@@ -58,7 +62,7 @@ delete %r{/(\d+)/edit} do |id|
   @id = id
   old_data = read_json
   old_data.delete(@id)
-  File.write(DB, JSON.dump(old_data))
+  write_json(old_data)
   redirect '/'
 end
 
