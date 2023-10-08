@@ -29,6 +29,9 @@ end
 
 before do
   @page_title = 'メモアプリ'
+  unless File.exist?('db.json')
+    File.write('db.json', '[]')
+  end
 end
 
 get '/' do
