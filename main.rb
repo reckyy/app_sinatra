@@ -13,7 +13,7 @@ def judge_request(json)
   memo_title = CGI.escapeHTML(params['title'])
   memo_content = CGI.escapeHTML(params['content'])
   if request.request_method == 'POST'
-    id = json.empty? ? 1 : json.keys.last + 1
+    id = json.empty? ? 1 : json.keys.last.to_i + 1
     json[id.to_s] = { 'id' => id, 'title' => memo_title, 'content' => memo_content }
   else
     json[@id.to_s] = { 'id' => @id, 'title' => memo_title, 'content' => memo_content }
