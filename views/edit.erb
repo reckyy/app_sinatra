@@ -1,8 +1,8 @@
 <div class='container'>
   <form method='post' action="/<%= @id %>/edit" class='form'>
     <input type="hidden" name="_method" value="patch">
-    <input type='text' name='title' value="<%= @json[@id]["title"] %>" class='text'>
-    <textarea name='content' class='textarea'><%= @json[@id]["content"] %></textarea>
+    <input type='text' name='title' value="<%= CGI.escapeHTML(@json[@id]["title"]) %>" class='text'>
+    <textarea name='content' class='textarea'><%= CGI.escapeHTML(@json[@id]["content"]) %></textarea>
     <div>
       <input type='submit' value='保存' class='button'>
     </div>

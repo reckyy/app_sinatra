@@ -3,7 +3,7 @@
     <% @json.each do |k, v| %>
       <li>
         <a href="/<%= k %>">
-          <%= v["title"] %>
+          <%= CGI.escapeHTML(v["title"]) %>
         </a>
       </li>
     <% end %>
