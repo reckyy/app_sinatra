@@ -13,9 +13,7 @@ end
 
 before do
   @page_title = 'メモアプリ'
-  unless File.exist?('db.json')
-    File.write(DB, '{}')
-  end
+  File.write(DB, '{}') unless File.exist?('db.json')
 end
 
 get '/' do
