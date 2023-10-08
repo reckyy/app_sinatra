@@ -1,6 +1,6 @@
 <div class='container'>
   <ol>
-    <% @json.each do |k, v| %>
+    <% @all_memos.each do |k, v| %>
       <li>
         <a href="/<%= k %>">
           <%= CGI.escapeHTML(v["title"]) %>

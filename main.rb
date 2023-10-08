@@ -33,7 +33,7 @@ before do
 end
 
 get '/' do
-  @json = read_json
+  @all_memos = read_json
   erb :index
 end
 
@@ -43,14 +43,14 @@ end
 
 get %r{/(\d+)} do |id|
   @id = id
-  @json = read_json
+  @all_memos = read_json
   erb :show
 end
 
 get %r{/(\d+)/edit} do |id|
   @page_title = 'メモ編集'
   @id = id
-  @json = read_json
+  @all_memos = read_json
   erb :edit
 end
 

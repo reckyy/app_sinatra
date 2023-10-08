@@ -1,11 +1,11 @@
 <div class='container'>
   <p>
     <strong>Title : </strong>
-    <%= CGI.escapeHTML(@json[@id]["title"]) %>
+    <%= CGI.escapeHTML(@all_memos[@id]["title"]) %>
   </p>
   <p>
     <strong>Content : </strong>
-    <%= CGI.escapeHTML(@json[@id]["content"]) %>
+    <%= CGI.escapeHTML(@all_memos[@id]["content"]) %>
   </p>
 
   <div class='inline-block'>
