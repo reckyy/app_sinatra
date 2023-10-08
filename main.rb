@@ -60,8 +60,7 @@ delete %r{/(\d+)/edit} do |id|
   @id = id
   old_data = read_json
   old_data.delete(@id)
-  new_data = JSON.dump(old_data)
-  File.write(DB, new_data)
+  File.write(DB, JSON.dump(old_data))
   redirect '/'
 end
 
