@@ -11,22 +11,6 @@ def read_json
   JSON.parse(File.read(DB))
 end
 
-def judge_request(json)
-  if request.request_method == 'POST'
-    id = json.empty? ? 1 : json.keys.last.to_i + 1
-    json[id.to_s] = { 'id' => id, 'title' => params['title'], 'content' => params['content'] }
-  else
-    json[@id.to_s] = { 'id' => @id, 'title' => params['title'], 'content' => params['content'] }
-  end
-end
-
-def edit_db
-  old_data = read_json
-  judge_request(old_data)
-  pushed_data = JSON.dump(old_data)
-  File.write(DB, pushed_data)
-end
-
 before do
   @page_title = 'メモアプリ'
   unless File.exist?('db.json')
@@ -57,13 +41,18 @@ get %r{/(\d+)/edit} do |id|
 end
 
 post '/new' do
-  edit_db
+  old_data = read_json
+  id = old_data.empty? ? 1 : old_data.keys.last.to_i + 1
+  old_data[id.to_s] = { 'id' => id, 'title' => params['title'], 'content' => params['content'] }
+  File.write(DB, JSON.dump(old_data))
   redirect '/'
 end
 
 patch %r{/(\d+)/edit} do |id|
   @id = id
-  edit_db
+  old_data = read_json
+  old_data[@id.to_s] = { 'id' => @id.to_i, 'title' => params['title'], 'content' => params['content'] }
+  File.write(DB, JSON.dump(old_data))
   redirect "/#{@id}"
 end
 
