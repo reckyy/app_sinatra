@@ -31,14 +31,14 @@ end
 
 get %r{/(\d+)} do |id|
   @id = id
-  @all_memos = read_json
+  @memo = read_json[@id]
   erb :show
 end
 
 get %r{/(\d+)/edit} do |id|
   @page_title = 'メモ編集'
   @id = id
-  @all_memos = read_json
+  @memo = read_json[@id]
   erb :edit
 end
 
