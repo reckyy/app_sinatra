@@ -44,7 +44,7 @@ end
 
 post '/new' do
   old_data = read_json
-  id = old_data.empty? ? 1 : old_data.keys.last.to_i + 1
+  id = old_data.empty? ? 1 : old_data.keys.max_by(&:to_i).to_i + 1
   old_data[id.to_s] = { 'id' => id, 'title' => params['title'], 'content' => params['content'] }
   write_json(old_data)
   redirect '/'
