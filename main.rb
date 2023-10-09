@@ -4,6 +4,7 @@ require 'sinatra/reloader'
 require 'sinatra'
 require 'json'
 require 'cgi'
+require 'debug'
 
 DB_PATH = 'db.json'
 
@@ -30,15 +31,13 @@ get '/new' do
 end
 
 get %r{/(\d+)} do |id|
-  @id = id
-  @memo = read_json[@id]
+  @memo = read_json[id]
   erb :show
 end
 
 get %r{/(\d+)/edit} do |id|
   @page_title = 'メモ編集'
-  @id = id
-  @memo = read_json[@id]
+  @memo = read_json[id]
   erb :edit
 end
 
@@ -51,17 +50,15 @@ post '/new' do
 end
 
 patch %r{/(\d+)/edit} do |id|
-  @id = id
   old_data = read_json
-  old_data[@id.to_s] = { 'id' => @id.to_i, 'title' => params['title'], 'content' => params['content'] }
+  old_data[id] = { 'id' => id.to_i, 'title' => params['title'], 'content' => params['content'] }
   write_json(old_data)
-  redirect "/#{@id}"
+  redirect "/#{id}"
 end
 
 delete %r{/(\d+)/edit} do |id|
-  @id = id
   old_data = read_json
-  old_data.delete(@id)
+  old_data.delete(id)
   write_json(old_data)
   redirect '/'
 end
