@@ -5,19 +5,19 @@ require 'sinatra'
 require 'json'
 require 'cgi'
 
-DB = 'db.json'
+DB_PATH = 'db.json'
 
 def read_json
-  JSON.parse(File.read(DB))
+  JSON.parse(File.read(DB_PATH))
 end
 
 def write_json(data)
-  File.write(DB, JSON.dump(data))
+  File.write(DB_PATH, JSON.dump(data))
 end
 
 before do
   @page_title = 'メモアプリ'
-  File.write(DB, '{}') unless File.exist?('db.json')
+  File.write(DB_PATH, '{}') unless File.exist?('db.json')
 end
 
 get '/' do
