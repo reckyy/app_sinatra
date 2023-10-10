@@ -13,7 +13,7 @@
     |
     <a href="/">Top</a>
     |
-    <form method="post" action="/<%= @id %>/edit" style='display: inline-block;'>
+    <form method="post" action="/<%= @memo['id'] %>/delete" style='display: inline-block;'>
       <input type="hidden" name="_method" value="delete">
       <input type="submit" value="削除" onclick="return confirm('入力内容を削除しても良いですか？');">
     </form>

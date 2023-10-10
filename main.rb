@@ -56,7 +56,7 @@ patch %r{/(\d+)/edit} do |id|
   redirect "/#{id}"
 end
 
-delete %r{/(\d+)/edit} do |id|
+delete %r{/(\d+)/delete} do |id|
   old_data = read_json
   old_data.delete(id)
   write_json(old_data)
