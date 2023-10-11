@@ -1,0 +1,10 @@
+<div class='container'>
+  <form method='post' action="/<%= @memo['id'] %>/edit" class='form'>
+    <input type="hidden" name="_method" value="patch">
+    <input type='text' name='title' value="<%= CGI.escapeHTML(@memo['title']) %>" class='text'>
+    <textarea name='content' class='textarea'><%= CGI.escapeHTML(@memo['content']) %></textarea>
+    <div>
+      <input type='submit' value='保存' class='button'>
+    </div>
+  </form>
+</div>

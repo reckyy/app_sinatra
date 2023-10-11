@@ -1,0 +1,12 @@
+<div class='container'>
+  <ol>
+    <% @all_memos.each do |k, v| %>
+      <li>
+        <a href="/<%= k %>">
+          <%= CGI.escapeHTML(v["title"]) %>
+        </a>
+      </li>
+    <% end %>
+  </ol>
+  <a href='/new'>新規メモ</a>
+</div>

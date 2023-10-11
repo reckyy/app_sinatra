@@ -1,0 +1,21 @@
+<div class='container'>
+  <p>
+    <strong>Title : </strong>
+    <%= CGI.escapeHTML(@memo["title"]) %>
+  </p>
+  <p>
+    <strong>Content : </strong>
+    <%= CGI.escapeHTML(@memo["content"]) %>
+  </p>
+
+  <div class='inline-block'>
+    <a href="/<%= @memo['id'] %>/edit">変更</a>
+    |
+    <a href="/">Top</a>
+    |
+    <form method="post" action="/<%= @memo['id'] %>/delete" style='display: inline-block;'>
+      <input type="hidden" name="_method" value="delete">
+      <input type="submit" value="削除" onclick="return confirm('入力内容を削除しても良いですか？');">
+    </form>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+.form {
+  text-align :center
+}
+
+.container {
+  width:80%;
+  padding-right:15px;
+  padding-left:15px;
+  margin-right:auto;
+  margin-left:auto;
+}
+
+.text {
+  width:80%;
+  height:50px;
+  font-size:1.5em;
+  margin:20px;
+}
+
+.textarea {
+  width:80%;
+  height:300px;
+  font-size:1.5em;
+  margin:20px;
+}
+
+.button {
+  height:40px;
+  width:50px;
+  margin:auto;
+  font-weight:bold;
+}
+
+.inline-block {
+  display: inline-block;
+}
