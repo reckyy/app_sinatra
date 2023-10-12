@@ -26,6 +26,10 @@ def edit_memo(title, content, id)
   conn.exec('update memos set title = $1, content = $2 where id = $3;', [title, content, id])
 end
 
+def delete_memo(id)
+  conn.exec('delete from memos where id = $1;', [id])
+end
+
 configure do
   result = conn.exec("select * from information_schema.tables where table_name = 'memos';")
   conn.exec('create table memos (id serial, title varchar(255), content text);') if result.values.empty?
@@ -66,9 +70,7 @@ patch %r{/(\d+)/edit} do |id|
 end
 
 delete %r{/(\d+)/delete} do |id|
-  old_data = read_json
-  old_data.delete(id)
-  write_json(old_data)
+  delete_memo(id.to_i)
   redirect '/'
 end
 
