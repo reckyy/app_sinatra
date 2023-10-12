@@ -14,6 +14,10 @@ def read_memos
   conn.exec('select * from memos;')
 end
 
+def post_memo(title, content)
+  conn.exec('insert into memos(title, content) values($1,$2);', [title,content])
+end
+
 configure do
   result = conn.exec("select * from information_schema.tables where table_name = 'memos';")
   conn.exec('create table memos (id serial, title varchar(255), content text);') if result.values.empty?
@@ -44,10 +48,7 @@ get %r{/(\d+)/edit} do |id|
 end
 
 post '/new' do
-  old_data = read_json
-  id = old_data.empty? ? 1 : old_data.keys.max_by(&:to_i).to_i + 1
-  old_data[id.to_s] = { 'id' => id, 'title' => params['title'], 'content' => params['content'] }
-  write_json(old_data)
+  post_memo(params['title'], params['content'])
   redirect '/'
 end
 
