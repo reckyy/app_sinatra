@@ -19,11 +19,11 @@ def post_memo(title, content)
 end
 
 def read_memo(id)
-  a = conn.exec('select * from memos where id = $1;', [id]).first
+  conn.exec('select * from memos where id = $1;', [id]).first
 end
 
 def edit_memo(title, content, id)
-  conn.exec('update memos set title = $1, content = $2 where id = $3;', [title, content, id]).first
+  conn.exec('update memos set title = $1, content = $2 where id = $3;', [title, content, id])
 end
 
 configure do
