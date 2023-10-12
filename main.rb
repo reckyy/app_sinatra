@@ -19,11 +19,11 @@ def post_memo(title, content)
 end
 
 def read_memo(id)
-  conn.exec('select * from memos where id = $1;', [id])
+  a = conn.exec('select * from memos where id = $1;', [id]).first
 end
 
 def edit_memo(title, content, id)
-  conn.exec('update memos set title = $1, content = $2 where id = $3;', [title, content, id])
+  conn.exec('update memos set title = $1, content = $2 where id = $3;', [title, content, id]).first
 end
 
 configure do
@@ -45,13 +45,13 @@ get '/new' do
 end
 
 get %r{/(\d+)} do |id|
-  @memo = read_memo(id)
+  @memo = read_memo(id.to_i)
   erb :show
 end
 
 get %r{/(\d+)/edit} do |id|
   @page_title = 'メモ編集'
-  @memo = read_memo(id)
+  @memo = read_memo(id.to_i)
   erb :edit
 end
 
@@ -61,7 +61,7 @@ post '/new' do
 end
 
 patch %r{/(\d+)/edit} do |id|
-  edit_memo(params['title'], params['content'], id)
+  edit_memo(params['title'], params['content'], id.to_i)
   redirect "/#{id}"
 end
 
