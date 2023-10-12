@@ -4,7 +4,6 @@ require 'sinatra/reloader'
 require 'sinatra'
 require 'pg'
 require 'cgi'
-require 'debug'
 
 def conn
   @conn ||= PG.connect(dbname: 'postgres')
