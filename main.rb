@@ -14,7 +14,7 @@ def read_memos
 end
 
 def post_memo(title, content)
-  conn.exec('insert into memos(title, content) values($1,$2);', [title,content])
+  conn.exec('insert into memos(title, content) values($1,$2);', [title, content])
 end
 
 def read_memo(id)
