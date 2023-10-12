@@ -18,6 +18,14 @@ def post_memo(title, content)
   conn.exec('insert into memos(title, content) values($1,$2);', [title,content])
 end
 
+def read_memo(id)
+  conn.exec('select * from memos where id = $1;', [id])
+end
+
+def edit_memo(title, content, id)
+  conn.exec('update memos set title = $1, content = $2 where id = $3;', [title, content, id])
+end
+
 configure do
   result = conn.exec("select * from information_schema.tables where table_name = 'memos';")
   conn.exec('create table memos (id serial, title varchar(255), content text);') if result.values.empty?
@@ -37,13 +45,13 @@ get '/new' do
 end
 
 get %r{/(\d+)} do |id|
-  @memo = read_json[id]
+  @memo = read_memo(id)
   erb :show
 end
 
 get %r{/(\d+)/edit} do |id|
   @page_title = 'メモ編集'
-  @memo = read_json[id]
+  @memo = read_memo(id)
   erb :edit
 end
 
@@ -53,9 +61,7 @@ post '/new' do
 end
 
 patch %r{/(\d+)/edit} do |id|
-  old_data = read_json
-  old_data[id] = { 'id' => id.to_i, 'title' => params['title'], 'content' => params['content'] }
-  write_json(old_data)
+  edit_memo(params['title'], params['content'], id)
   redirect "/#{id}"
 end
 
