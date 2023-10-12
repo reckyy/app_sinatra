@@ -5,10 +5,7 @@ ruby 3.2.2
 1. まず、このリポジトリをcloneします。
 `git clone https://github.com/reckyy/app_sinatra.git`
 
-2. 必要なGemをインストールしてください。
-`bundle install`
-
-3. cloneに成功したら起動してください。
+2. cloneに成功したら起動してください。
 `ruby main.rb`
 起動したら、`http://localhost:4567`にアクセスしてください。
 メモ一覧が出てくれば、アクセス成功です。
