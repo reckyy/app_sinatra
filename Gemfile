@@ -8,6 +8,7 @@ gem 'puma'
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'webrick'
+gem 'pg'
 # For plain Ruby scripts
 group :development do
   gem 'rubocop-fjord', require: false
