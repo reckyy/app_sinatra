@@ -2,27 +2,29 @@
 
 require 'sinatra/reloader'
 require 'sinatra'
-require 'json'
+require 'pg'
 require 'cgi'
 require 'debug'
 
-DB_PATH = 'db.json'
-
-def read_json
-  JSON.parse(File.read(DB_PATH))
+def conn
+  @conn ||= PG.connect(dbname: 'postgres')
 end
 
-def write_json(data)
-  File.write(DB_PATH, JSON.dump(data))
+def read_memos
+  conn.exec('select * from memos;')
+end
+
+configure do
+  result = conn.exec("select * from information_schema.tables where table_name = 'memos';")
+  conn.exec('create table memos (id serial, title varchar(255), content text);') if result.values.empty?
 end
 
 before do
   @page_title = 'メモアプリ'
-  File.write(DB_PATH, '{}') unless File.exist?('db.json')
 end
 
 get '/' do
-  @all_memos = read_json
+  @all_memos = read_memos
   erb :index
 end
 

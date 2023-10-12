@@ -1,9 +1,9 @@
 <div class='container'>
   <ol>
-    <% @all_memos.each do |k, v| %>
+    <% @all_memos.each do |memo| %>
       <li>
-        <a href="/<%= k %>">
-          <%= CGI.escapeHTML(v["title"]) %>
+        <a href="/<%= memo['id'] %>">
+          <%= CGI.escapeHTML(memo['title']) %>
         </a>
       </li>
     <% end %>
