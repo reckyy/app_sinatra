@@ -5,7 +5,13 @@ ruby 3.2.2
 1. まず、このリポジトリをcloneします。
 `git clone https://github.com/reckyy/app_sinatra.git`
 
-2. cloneに成功したら起動してください。
+2. PostgreSQLをインストール
+もしPostgreSQLをインストールしてなければ、[公式サイト](https://www.postgresql.jp/download)からインストールしてください。
+
+3. テーブルの作成
+`ruby pg.rb`
+
+4. 起動してください。
 `ruby main.rb`
 起動したら、`http://localhost:4567`にアクセスしてください。
 メモ一覧が出てくれば、アクセス成功です。

@@ -29,11 +29,6 @@ def delete_memo(id)
   conn.exec('delete from memos where id = $1;', [id])
 end
 
-configure do
-  result = conn.exec("select * from information_schema.tables where table_name = 'memos';")
-  conn.exec('create table memos (id serial, title varchar(255), content text);') if result.values.empty?
-end
-
 before do
   @page_title = 'メモアプリ'
 end
