@@ -2,27 +2,39 @@
 
 require 'sinatra/reloader'
 require 'sinatra'
-require 'json'
+require 'pg'
 require 'cgi'
-require 'debug'
 
-DB_PATH = 'db.json'
-
-def read_json
-  JSON.parse(File.read(DB_PATH))
+def conn
+  @conn ||= PG.connect(dbname: 'postgres')
 end
 
-def write_json(data)
-  File.write(DB_PATH, JSON.dump(data))
+def read_memos
+  conn.exec('select * from memos;')
+end
+
+def post_memo(title, content)
+  conn.exec('insert into memos(title, content) values($1,$2);', [title, content])
+end
+
+def read_memo(id)
+  conn.exec('select * from memos where id = $1;', [id]).first
+end
+
+def edit_memo(title, content, id)
+  conn.exec('update memos set title = $1, content = $2 where id = $3;', [title, content, id])
+end
+
+def delete_memo(id)
+  conn.exec('delete from memos where id = $1;', [id])
 end
 
 before do
   @page_title = 'メモアプリ'
-  File.write(DB_PATH, '{}') unless File.exist?('db.json')
 end
 
 get '/' do
-  @all_memos = read_json
+  @all_memos = read_memos
   erb :index
 end
 
@@ -31,35 +43,28 @@ get '/new' do
 end
 
 get %r{/(\d+)} do |id|
-  @memo = read_json[id]
+  @memo = read_memo(id.to_i)
   erb :show
 end
 
 get %r{/(\d+)/edit} do |id|
   @page_title = 'メモ編集'
-  @memo = read_json[id]
+  @memo = read_memo(id.to_i)
   erb :edit
 end
 
 post '/new' do
-  old_data = read_json
-  id = old_data.empty? ? 1 : old_data.keys.max_by(&:to_i).to_i + 1
-  old_data[id.to_s] = { 'id' => id, 'title' => params['title'], 'content' => params['content'] }
-  write_json(old_data)
+  post_memo(params['title'], params['content'])
   redirect '/'
 end
 
 patch %r{/(\d+)/edit} do |id|
-  old_data = read_json
-  old_data[id] = { 'id' => id.to_i, 'title' => params['title'], 'content' => params['content'] }
-  write_json(old_data)
+  edit_memo(params['title'], params['content'], id.to_i)
   redirect "/#{id}"
 end
 
 delete %r{/(\d+)/delete} do |id|
-  old_data = read_json
-  old_data.delete(id)
-  write_json(old_data)
+  delete_memo(id.to_i)
   redirect '/'
 end
 
